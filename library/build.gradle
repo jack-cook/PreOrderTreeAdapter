@@ -1,4 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+
+group = 'cn.okayj'
+version = '1.0.0'
+archivesBaseName = 'linear-tree-adapter'
 
 android {
     compileSdkVersion 25
@@ -21,6 +27,52 @@ android {
     }
 }
 
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'Linear Tree Adapter'
+//                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'okayj'
+                        name 'Jack Cook'
+                        email '497737103@qq.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -28,7 +80,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
-    compile 'cn.okayj:lineartree:0.2.1'
+    compile 'cn.okayj:lineartree:0.3.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
-    compile 'cn.okayj:axui:0.1.1'
+    compile 'cn.okayj:axui:0.1.2'
 }

@@ -1,6 +1,5 @@
 package cn.okayj.axui.lineartreeadapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
@@ -11,6 +10,11 @@ import cn.okayj.util.lineartree.NodeFlatIndex;
 /**
  * Created by jack on 2017/1/11.
  */
+
+/**
+ * @param <N>
+ * @param <VH>
+ */
 public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements LinearDataSource<VH> {
     private AdapterBridge<VH> realAdapter;
 
@@ -18,19 +22,37 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     private NodeFlatIndex nodeFlatIndex;
 
-    private NodeFlatIndex.VisibleFlatIndex visibleFlatIndex;
-
     private N source;
 
+    /**
+     * the root object is ignored in aspect of view
+     * unless {@link #root()} return false
+     * @return
+     */
     protected abstract N root();
 
+    /**
+     * whether root object is ignored in aspect of view
+     * @return
+     */
     protected boolean ignoreRoot(){
         return true;
     }
 
+    /**
+     * child size of node n
+     * @param n
+     * @return
+     */
     protected abstract int getChildSize(N n);
 
-    protected abstract N getChild(N parent, int childIndex);
+    /**
+     * retrieve a child from a node
+     * @param parent witch node to retrieve child
+     * @param childPosition position in parent
+     * @return
+     */
+    protected abstract N getChild(N parent, int childPosition);
 
     protected abstract int getViewTypeCount();
 
@@ -53,7 +75,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     }*/
 
-    public boolean notifyChildAdd(N parent, N child, int positionInParent){
+    public boolean notifyChildAdded(N parent, N child, int positionInParent){
         DataNode node = findNode(parent);
         if(node == null)
             return false;
@@ -69,7 +91,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
         return true;
     }
 
-    public boolean notifyChildRemove(N child){
+    public boolean notifyChildRemoved(N child){
         DataNode node = findNode(child);
         if(node == null)
             return false;
@@ -84,49 +106,53 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
         return true;
     }
 
-    public void notifyDataSetChange(){
+    public void notifyDataSetChanged(){
         buildModel();
         realAdapter.notifyDataSetChanged();
     }
 
-    /*public void notifyDataSetChange(N subTree){
+    public void notifyDataSetChanged(N subTree){
         DataNode node = findNode(subTree);
 
         if(node == null)
             return;
 
         if(node == rootNode){
-            notifyDataSetChange();
+            notifyDataSetChanged();
             return;
         }else {
             DataNode parent = node.getParentNode();
-            parent.
-
+            int position = parent.removeChildNode(node);
+            assert position >= 0;
+            parent.addChildNode(position,buildSubTree(subTree));
         }
 
+        realAdapter.notifyDataSetChanged();
 
-    }*/
+    }
 
 
 
     @Override
     public int count(){
-        return visibleFlatIndex.size();
+        if(nodeFlatIndex == null)//root() 为 null 会出现这种情况
+            return 0;
+        return nodeFlatIndex.size();
     }
 
     @Override
     public Object item(int position){
-        return visibleFlatIndex.get(position).getSource();
+        return nodeFlatIndex.get(position).getSource();
     }
 
     @Override
     public int itemId(int position){
-        return getItemId((N)visibleFlatIndex.get(position).getSource());
+        return getItemId((N) nodeFlatIndex.get(position).getSource());
     }
 
     @Override
     public int viewType(int position) {
-        return getViewType((N)visibleFlatIndex.get(position).getSource());
+        return getViewType((N) nodeFlatIndex.get(position).getSource());
     }
 
     @Override
@@ -141,7 +167,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     @Override
     public void bindViewHolder(VH viewHolder, int position) {
-        N data = (N)visibleFlatIndex.get(position);
+        N data = (N) nodeFlatIndex.get(position);
         onBindViewHolder(viewHolder,data);
     }
 
@@ -160,7 +186,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
         rootNode = null;
         source = null;
         nodeFlatIndex = null;
-        visibleFlatIndex = null;
+        nodeFlatIndex = null;
     }
 
     /**
@@ -172,7 +198,8 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
         if(source != null){
             rootNode = buildSubTree(source);
             nodeFlatIndex = rootNode.getFlatIndex();
-            visibleFlatIndex = nodeFlatIndex.getVisibleIndex();
+            if(ignoreRoot())
+                nodeFlatIndex.ignoreRoot(true);
         }
     }
 

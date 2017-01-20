@@ -1,4 +1,4 @@
-package cn.okayj.lineartreeadapter;
+package cn.okayj.androidtest;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
