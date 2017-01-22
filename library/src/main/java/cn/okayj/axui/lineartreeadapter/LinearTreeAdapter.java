@@ -56,7 +56,13 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     protected abstract int getViewTypeCount();
 
-    protected abstract int getViewType(N n);
+    /**
+     *
+     * @param n
+     * @param depth node depth in the tree , begin from 1 (root node)
+     * @return
+     */
+    protected abstract int getViewType(N n, int depth);
 
     protected abstract VH onCreateViewHolder(ViewGroup viewGroup, int viewType);
 
@@ -152,7 +158,14 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     @Override
     public int viewType(int position) {
-        return getViewType((N) nodeFlatIndex.get(position).getSource());
+        DataNode<N> node = (DataNode<N>) nodeFlatIndex.get(position);
+        int depth = 1;//todo 动态求深度是否低效？
+        DataNode ancestor = node;
+        while ((ancestor = ancestor.getParentNode()) != null){
+            depth ++;
+        }
+
+        return getViewType(node.getSource(),depth);
     }
 
     @Override
@@ -167,8 +180,8 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     @Override
     public void bindViewHolder(VH viewHolder, int position) {
-        N data = (N) nodeFlatIndex.get(position);
-        onBindViewHolder(viewHolder,data);
+        DataNode<N> dataNode= (DataNode<N>) nodeFlatIndex.get(position);
+        onBindViewHolder(viewHolder,dataNode.getSource());
     }
 
     private DataNode<N> buildSubTree(N data){
@@ -176,7 +189,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
         node.setSource(data);
         int childSize = getChildSize(data);
         for (int i = 0; i < childSize; ++i){
-            buildSubTree(getChild(data,i));
+            node.addChildNode(buildSubTree(getChild(data,i)));
         }
 
         return node;
@@ -190,7 +203,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
     }
 
     /**
-     * build or rebuild
+     * build or rebuild the internal tree model
      */
     private void buildModel(){
         clearData();

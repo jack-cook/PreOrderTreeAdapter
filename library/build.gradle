@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 
 group = 'cn.okayj'
-version = '1.0.0'
+version = '1.1.0'
 archivesBaseName = 'linear-tree-adapter'
 
 android {
@@ -80,7 +80,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
-    compile 'cn.okayj:lineartree:0.3.0'
+    compile 'cn.okayj:lineartree:0.3.1'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'cn.okayj:axui:0.1.2'
 }
