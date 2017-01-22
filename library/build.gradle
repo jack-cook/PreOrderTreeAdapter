@@ -1,6 +1,11 @@
+plugins {
+    id "com.jfrog.bintray" version "1.6"
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
+init()
 
 group = 'cn.okayj'
 version = '1.1.0'
@@ -27,13 +32,35 @@ android {
     }
 }
 
+def siteUrl = 'https://github.com/jack-cook/LinearTreeAdapter'
+def gitUrl = 'https://github.com/jack-cook/LinearTreeAdapter.git'
+
+bintray {
+    user = local.getAt("BINTRAY_USER");
+    key = local.getAt('BINTRAY_KEY');
+
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'LinearTreeAdapter'
+        licenses = ['Apache-2.0']
+
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+
+        version {
+            name = project.version
+        }
+    }
+}
+
 install {
     repositories.mavenInstaller {
         pom {
             project {
                 packaging 'aar'
                 name 'Linear Tree Adapter'
-//                url siteUrl
+                url siteUrl
                 licenses {
                     license {
                         name 'The Apache Software License, Version 2.0'
@@ -50,6 +77,14 @@ install {
                 }
             }
         }
+    }
+}
+
+void init(){
+    Properties localProperties = new Properties();
+    localProperties.load(new FileInputStream(file('../local.properties')));
+    ext {
+        local = localProperties;
     }
 }
 
