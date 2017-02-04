@@ -4,7 +4,7 @@ An adapter which can be used for ListView or RecyclerView. It traverse data in p
 一个可以先序遍历数据的 adapter， 可以用于ListView和RecyclerView， 也可以自己扩展。
 
 ## Demo
-[Book A][https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/desplay/device-2017-01-23-021752.png]
+[Book A][1]
 
 ## Usage
     class MyAdapter extends PreOrderTreeAdapter<Object,ViewHolder> {
@@ -67,3 +67,5 @@ An adapter which can be used for ListView or RecyclerView. It traverse data in p
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+[1]: https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/desplay/device-2017-01-23-021752.png
