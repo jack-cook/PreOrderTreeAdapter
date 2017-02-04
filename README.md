@@ -4,9 +4,20 @@ An adapter which can be used for ListView or RecyclerView. It traverse data in p
 一个可以先序遍历数据的 adapter， 可以用于ListView和RecyclerView， 也可以自己扩展。
 
 ## Demo
-![Book A](https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/desplay/device-2017-01-23-021752.png)
+<p>
+   <img src="https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/desplay/device-2017-01-23-021752.png" width="320" />
+</p>
 
 ## Usage
+
+#### dependency
+
+**Gradle**：
+compile 'cn.okayj:preorder-tree-adapter:1.2.0'
+
+
+#### code
+
     class MyAdapter extends PreOrderTreeAdapter<Object,ViewHolder> {
 
         @Override
