@@ -8,8 +8,8 @@ apply plugin: 'com.github.dcendents.android-maven'
 init()
 
 group = 'cn.okayj'
-version = '1.1.0'
-archivesBaseName = 'linear-tree-adapter'
+version = '1.2.0'
+archivesBaseName = 'preorder-tree-adapter'
 
 android {
     compileSdkVersion 25
@@ -32,8 +32,8 @@ android {
     }
 }
 
-def siteUrl = 'https://github.com/jack-cook/LinearTreeAdapter'
-def gitUrl = 'https://github.com/jack-cook/LinearTreeAdapter.git'
+def siteUrl = 'https://github.com/jack-cook/PreOrderTreeAdapter'
+def gitUrl = 'https://github.com/jack-cook/PreOrderTreeAdapter.git'
 
 bintray {
     user = local.getAt("BINTRAY_USER");
@@ -42,7 +42,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = 'maven'
-        name = 'LinearTreeAdapter'
+        name = 'PreOrderTreeAdapter'
         licenses = ['Apache-2.0']
 
         websiteUrl = siteUrl
@@ -59,7 +59,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'Linear Tree Adapter'
+                name 'Pre-order Tree Adapter'
                 url siteUrl
                 licenses {
                     license {
@@ -118,4 +118,5 @@ dependencies {
     compile 'cn.okayj:lineartree:0.3.1'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'cn.okayj:axui:0.1.2'
+    compile 'cn.okayj:axui-support-recyclerview:0.1.2'
 }

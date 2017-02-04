@@ -26,5 +26,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
-    compile 'cn.okayj:linear-tree-adapter:1.1.0'
+    compile 'cn.okayj:preorder-tree-adapter:1.2.0'
 }

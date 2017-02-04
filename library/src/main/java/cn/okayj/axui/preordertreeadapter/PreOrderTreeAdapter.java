@@ -1,5 +1,6 @@
-package cn.okayj.axui.lineartreeadapter;
+package cn.okayj.axui.preordertreeadapter;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
@@ -15,7 +16,7 @@ import cn.okayj.util.lineartree.NodeFlatIndex;
  * @param <N>
  * @param <VH>
  */
-public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements LinearDataSource<VH> {
+public abstract class PreOrderTreeAdapter<N,VH extends ViewHolder> implements LinearDataSource<VH> {
     private AdapterBridge<VH> realAdapter;
 
     private DataNode<N> rootNode;
@@ -68,18 +69,29 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
 
     protected abstract void onBindViewHolder(VH viewHolder, N data);
 
-    protected abstract int getItemId(N data);
+    protected int getItemId(N data){
+        return 0;
+    }
 
     public ListAdapter asListAdapter() {
+        if(realAdapter != null && realAdapter instanceof ListAdapter)
+            return (ListAdapter) realAdapter;
+
         ListViewAdapter listAdapter = new ListViewAdapter<>(this);
         realAdapter = listAdapter;
         buildModel();
         return listAdapter;
     }
 
-    /*public RecyclerView.Adapter asRecyclerAdapter() {
+    public RecyclerView.Adapter asRecyclerAdapter() {
+        if(realAdapter != null && realAdapter instanceof RecyclerView.Adapter)
+            return (RecyclerView.Adapter) realAdapter;
 
-    }*/
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter<>(this);
+        realAdapter = adapter;
+        buildModel();
+        return adapter;
+    }
 
     public boolean notifyChildAdded(N parent, N child, int positionInParent){
         DataNode node = findNode(parent);
@@ -112,11 +124,18 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
         return true;
     }
 
+    /**
+     * see also {@link #notifyDataSetChanged(Object)}
+     */
     public void notifyDataSetChanged(){
         buildModel();
         realAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * more efficient than {@link #notifyDataSetChanged()}
+     * @param subTree
+     */
     public void notifyDataSetChanged(N subTree){
         DataNode node = findNode(subTree);
 
@@ -205,7 +224,7 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
     /**
      * build or rebuild the internal tree model
      */
-    private void buildModel(){
+    public final PreOrderTreeAdapter buildModel(){
         clearData();
         source = root();
         if(source != null){
@@ -214,6 +233,8 @@ public abstract class LinearTreeAdapter<N,VH extends ViewHolder> implements Line
             if(ignoreRoot())
                 nodeFlatIndex.ignoreRoot(true);
         }
+
+        return this;
     }
 
     private DataNode<N> findNode(N data){

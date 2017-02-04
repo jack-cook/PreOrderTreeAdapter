@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import cn.okayj.axui.lineartreeadapter.LinearTreeAdapter;
+import cn.okayj.axui.preordertreeadapter.PreOrderTreeAdapter;
 
 /**
  * Created by jack on 2017/1/23.
  */
 
-public class LinearTreeAdapterDemo extends Activity {
+public class PreOrderTreeAdapterDemo extends Activity {
     private Content book;
 
     private ListView listView;
@@ -69,13 +69,13 @@ public class LinearTreeAdapterDemo extends Activity {
         listView.setAdapter(new TreeAdapter().asListAdapter());
     }
 
-    class TreeAdapter extends LinearTreeAdapter<Content,ViewHolder> {
+    class TreeAdapter extends PreOrderTreeAdapter<Content,ViewHolder> {
         private final int VIEW_TYPE_BOOK = 0;
         private final int VIEW_TYPE_PART = 1;
         private final int VIEW_TYPE_CHAPTER = 2;
         private final int VIEW_TYPE_CONTENT = 3;
 
-        LayoutInflater layoutInflater = LayoutInflater.from(LinearTreeAdapterDemo.this);
+        LayoutInflater layoutInflater = LayoutInflater.from(PreOrderTreeAdapterDemo.this);
 
         @Override
         protected Content root() {

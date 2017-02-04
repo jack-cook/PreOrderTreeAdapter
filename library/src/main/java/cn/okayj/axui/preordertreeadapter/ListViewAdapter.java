@@ -1,4 +1,4 @@
-package cn.okayj.axui.lineartreeadapter;
+package cn.okayj.axui.preordertreeadapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,7 @@ import cn.okayj.axui.viewholder.ViewHolder;
  * Created by jack on 2017/1/12.
  */
 
-public class ListViewAdapter<VH extends ViewHolder> extends BaseAdapter implements AdapterBridge<VH>{
+class ListViewAdapter<VH extends ViewHolder> extends BaseAdapter implements AdapterBridge<VH>{
     private LinearDataSource<VH> source;
 
     public ListViewAdapter(LinearDataSource<VH> source) {

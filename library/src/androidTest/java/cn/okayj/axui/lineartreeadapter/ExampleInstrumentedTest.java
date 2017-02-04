@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("cn.okayj.axui.LinearTreeAdapter.test", appContext.getPackageName());
+        assertEquals("cn.okayj.axui.PreOrderTreeAdapter.test", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package cn.okayj.axui.lineartreeadapter;
+package cn.okayj.axui.preordertreeadapter;
 
 import android.view.ViewGroup;
 
