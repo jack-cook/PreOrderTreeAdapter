@@ -1,8 +1,10 @@
 # PreOrderTreeAdapter
 An adapter which can be used for ListView or RecyclerView. It traverse data in pre-order.
 
-一个可以先顺遍历数据的 adapter， 可以用于ListView和RecyclerView， 也可以自己扩展。
+一个可以先序遍历数据的 adapter， 可以用于ListView和RecyclerView， 也可以自己扩展。
 
+## Demo
+[Book A][https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/desplay/device-2017-01-23-021752.png]
 
 ## Usage
     class MyAdapter extends PreOrderTreeAdapter<Object,ViewHolder> {
