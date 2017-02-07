@@ -5,7 +5,7 @@ An adapter which can be used for ListView or RecyclerView. It traverse data in p
 
 ## Demo
 <p>
-   <img src="https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/desplay/device-2017-01-23-021752.png" width="320" />
+   <img src="https://github.com/jack-cook/PreOrderTreeAdapter/blob/master/display/device-2017-01-23-021752.png" width="320" />
 </p>
 
 ## Usage
