@@ -156,6 +156,14 @@ public abstract class PreOrderTreeAdapter<N,VH extends ViewHolder> implements Li
 
     }
 
+    /**
+     * unlike {@link #notifyDataSetChanged()}, this method do not rebuild the internal tree model.
+     * if your data changes properties but not the structure of tree, use this method.
+     */
+    public void notifyDataStateChanged(){
+        realAdapter.notifyDataSetChanged();
+    }
+
 
 
     @Override
