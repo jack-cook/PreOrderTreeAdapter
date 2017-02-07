@@ -13,7 +13,7 @@ An adapter which can be used for ListView or RecyclerView. It traverse data in p
 #### dependency
 
 **Gradle**：
-compile 'cn.okayj:preorder-tree-adapter:1.2.0'
+compile 'cn.okayj:preorder-tree-adapter:1.3.0'
 
 
 #### code
