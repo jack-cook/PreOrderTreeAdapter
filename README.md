@@ -4,7 +4,7 @@ It can be used to implement second-level list like ExpandableListView, but not l
 
 高效先序遍历嵌套的数据的Adapter(内部构建索引)，
 配合ListView和RecyclerView可方便展示嵌套的数据（不用特地编写相应的数据结构去配合ListView和RecyclerView）.
-可以用其实现伪二级列表（类似ExpandableListView，但层级数不限）。
+可以用其实现伪二级列表以及展开／收缩效果（类似ExpandableListView，但层级数不限）。
 
 ## Demo
 <p>
@@ -31,6 +31,14 @@ compile 'cn.okayj:preorder-tree-adapter:1.3.0'
         @Override
         protected int getChildSize(Object someNode) {
             // return the size of children of someNode
+
+            // You can return the exact size or 0 to achieve collapsible feature.
+            // Don't forget notify this adapter.
+
+            //返回孩子数量
+
+            //可以根据需求返回实际的数量或者0，以达到展开／收缩的效果。
+            //改变数量不要忘记notify
         }
 
         @Override
