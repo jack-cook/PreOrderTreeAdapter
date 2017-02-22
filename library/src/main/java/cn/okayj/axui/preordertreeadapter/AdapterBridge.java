@@ -9,14 +9,5 @@ import cn.okayj.axui.viewholder.ViewHolder;
  */
 
 interface AdapterBridge<VH extends ViewHolder> {
-
-    /*int createViewHolder(ViewGroup viewGroup, int viewType);
-
-    void onBindViewHolder(VH viewHolder, int position);
-
-    int viewTypeCount();
-
-    int viewType(int position);*/
-
     void notifyDataSetChanged();
 }

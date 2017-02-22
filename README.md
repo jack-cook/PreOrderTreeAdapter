@@ -1,7 +1,10 @@
 # PreOrderTreeAdapter
-An adapter which can be used for ListView or RecyclerView. It traverse data in pre-order.
+An adapter which can be used for ListView or RecyclerView. It traverses data in pre-order,than builds index internal.
+It can be used to implement second-level list like ExpandableListView, but not limited to hierarchy depth.
 
-一个可以先序遍历数据的 adapter， 可以用于ListView和RecyclerView， 也可以自己扩展。
+高效先序遍历嵌套的数据的Adapter(内部构建索引)，
+配合ListView和RecyclerView可方便展示嵌套的数据（不用特地编写相应的数据结构去配合ListView和RecyclerView）.
+可以用其实现伪二级列表（类似ExpandableListView，但层级数不限）。
 
 ## Demo
 <p>
