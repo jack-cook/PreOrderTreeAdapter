@@ -16,7 +16,7 @@ It can be used to implement second-level list like ExpandableListView, but not l
 #### dependency
 
 **Gradle**：
-compile 'cn.okayj:preorder-tree-adapter:1.3.1'
+compile 'cn.okayj:preorder-tree-adapter:1.4.0'
 
 
 #### code

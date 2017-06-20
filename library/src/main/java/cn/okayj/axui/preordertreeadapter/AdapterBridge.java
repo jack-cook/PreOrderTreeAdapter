@@ -1,7 +1,5 @@
 package cn.okayj.axui.preordertreeadapter;
 
-import android.view.ViewGroup;
-
 import cn.okayj.axui.viewholder.ViewHolder;
 
 /**
@@ -10,4 +8,8 @@ import cn.okayj.axui.viewholder.ViewHolder;
 
 interface AdapterBridge<VH extends ViewHolder> {
     void notifyDataSetChanged();
+
+    void notifyItemRangeInserted(int positionStart, int itemCount);
+
+    void notifyItemRangeRemoved(int positionStart, int itemCount);
 }

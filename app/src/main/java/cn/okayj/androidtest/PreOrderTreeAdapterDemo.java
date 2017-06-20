@@ -2,6 +2,8 @@ package cn.okayj.androidtest;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import cn.okayj.axui.preordertreeadapter.PreOrderTreeAdapter;
 public class PreOrderTreeAdapterDemo extends Activity {
     private Content book;
 
-    private ListView listView;
+    private RecyclerView listView;
     private TreeAdapter adapter;
 
     {
@@ -66,9 +68,10 @@ public class PreOrderTreeAdapterDemo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linear_tree);
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (RecyclerView) findViewById(R.id.list_view);
+        listView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         adapter = new TreeAdapter();
-        listView.setAdapter(adapter.asListAdapter());
+        listView.setAdapter(adapter.asRecyclerAdapter());
     }
 
     class TreeAdapter extends PreOrderTreeAdapter<Content,ViewHolder> {
@@ -175,7 +178,7 @@ public class PreOrderTreeAdapterDemo extends Activity {
                 @Override
                 public void onClick(View v) {
 //                    adapter.notifyChildAdded(getItem(),new Content("added~~~"),0);
-//                    adapter.notifyChildRemoved(getItem());
+                    adapter.notifyChildRemoved(getItem());
                 }
             });
         }
