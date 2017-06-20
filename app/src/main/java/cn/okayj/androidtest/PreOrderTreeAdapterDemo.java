@@ -18,6 +18,7 @@ public class PreOrderTreeAdapterDemo extends Activity {
     private Content book;
 
     private ListView listView;
+    private TreeAdapter adapter;
 
     {
         book = new Content("BOOK A");
@@ -66,7 +67,8 @@ public class PreOrderTreeAdapterDemo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linear_tree);
         listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(new TreeAdapter().asListAdapter());
+        adapter = new TreeAdapter();
+        listView.setAdapter(adapter.asListAdapter());
     }
 
     class TreeAdapter extends PreOrderTreeAdapter<Content,ViewHolder> {
@@ -169,6 +171,13 @@ public class PreOrderTreeAdapterDemo extends Activity {
         protected void onBindView(View itemView) {
             super.onBindView(itemView);
             textView = (TextView) itemView;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    adapter.notifyChildAdded(getItem(),new Content("added~~~"),0);
+//                    adapter.notifyChildRemoved(getItem());
+                }
+            });
         }
     }
 }
