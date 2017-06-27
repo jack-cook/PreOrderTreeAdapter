@@ -16,7 +16,7 @@ It can be used to implement second-level list like ExpandableListView, but not l
 #### dependency
 
 **Gradle**：
-compile 'cn.okayj:preorder-tree-adapter:1.4.0'
+compile 'cn.okayj:preorder-tree-adapter:2.0'
 
 
 #### code
@@ -75,6 +75,9 @@ compile 'cn.okayj:preorder-tree-adapter:1.4.0'
     // listAdapter = new ListViewAdapter(new MyAdapter().buildModel()); // you can extend ListViewAdapter to add your feature for ListView
 
     listView.setAdapter(listAdapter);
+    
+
+## change
 
 
 ## License
