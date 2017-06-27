@@ -1,12 +1,10 @@
 package cn.okayj.axui.preordertreeadapter;
 
-import cn.okayj.axui.viewholder.ViewHolder;
-
 /**
  * Created by jack on 2017/1/12.
  */
 
-interface AdapterBridge<VH extends ViewHolder> {
+interface AdapterBridge<VH extends PreOrderTreeAdapter.ViewHolder> {
     void notifyDataSetChanged();
 
     void notifyItemRangeInserted(int positionStart, int itemCount);

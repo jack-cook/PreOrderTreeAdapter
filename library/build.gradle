@@ -8,7 +8,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 init()
 
 group = 'cn.okayj'
-version = '1.4.0'
+version = '2.0'
 archivesBaseName = 'preorder-tree-adapter'
 
 android {
@@ -117,6 +117,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'cn.okayj:lineartree:0.3.2'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'cn.okayj:axui:0.1.2'
-    compile 'cn.okayj:axui-support-recyclerview:0.1.2'
+    compile 'cn.okayj:axui:0.9'
+    compile 'cn.okayj:axui-support-recyclerview:0.9'
 }

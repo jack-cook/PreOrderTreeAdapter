@@ -4,13 +4,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import cn.okayj.axui.viewholder.ViewHolder;
 
 /**
  * Created by jack on 2017/1/12.
  */
 
-class ListViewAdapter<VH extends ViewHolder> extends BaseAdapter implements AdapterBridge<VH> {
+class ListViewAdapter<VH extends PreOrderTreeAdapter.ViewHolder> extends BaseAdapter implements AdapterBridge<VH> {
     private LinearDataSource<VH> source;
 
     ListViewAdapter(LinearDataSource<VH> source) {
@@ -38,7 +37,7 @@ class ListViewAdapter<VH extends ViewHolder> extends BaseAdapter implements Adap
         if (convertView == null) {
             vh = source.createViewHolder(parent, getItemViewType(position));//todo 以此获取viewtype是否低效？
         } else {
-            vh = (VH) ViewHolder.getHolder(convertView);
+            vh = (VH) PreOrderTreeAdapter.ViewHolder.getHolder(convertView);
         }
 
         source.bindViewHolder(vh, position);

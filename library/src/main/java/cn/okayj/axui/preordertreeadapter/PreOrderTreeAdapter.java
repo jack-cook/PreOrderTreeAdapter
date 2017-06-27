@@ -1,10 +1,10 @@
 package cn.okayj.axui.preordertreeadapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
-import cn.okayj.axui.viewholder.ViewHolder;
 import cn.okayj.util.lineartree.DataNode;
 import cn.okayj.util.lineartree.NodeFlatIndex;
 
@@ -16,7 +16,7 @@ import cn.okayj.util.lineartree.NodeFlatIndex;
  * @param <N>
  * @param <VH>
  */
-public abstract class PreOrderTreeAdapter<N, VH extends ViewHolder> implements LinearDataSource<VH> {
+public abstract class PreOrderTreeAdapter<N, VH extends PreOrderTreeAdapter.ViewHolder> implements LinearDataSource<VH> {
     private AdapterBridge<VH> realAdapter;
 
     private DataNode<N> rootNode;
@@ -135,9 +135,9 @@ public abstract class PreOrderTreeAdapter<N, VH extends ViewHolder> implements L
             node.removeFromParent();
         }
 
-        if(count > 0){
+        if (count > 0) {
             realAdapter.notifyItemRangeRemoved(startPosition, count);
-        }else {
+        } else {
             // not changed
         }
 
@@ -254,11 +254,11 @@ public abstract class PreOrderTreeAdapter<N, VH extends ViewHolder> implements L
      * build or rebuild the internal tree model
      */
     public final PreOrderTreeAdapter buildModel() {
-        return  buildModel(true);
+        return buildModel(true);
     }
 
-    private PreOrderTreeAdapter buildModel(boolean forceRebuld){
-        if(forceRebuld || !inited){
+    private PreOrderTreeAdapter buildModel(boolean forceRebuld) {
+        if (forceRebuld || !inited) {
             clearData();
             source = root();
             if (source != null) {
@@ -302,6 +302,39 @@ public abstract class PreOrderTreeAdapter<N, VH extends ViewHolder> implements L
         }
 
         return -1;
+    }
+
+    public N getParent(N data) {
+        DataNode node = findNode(data);
+        if (node != null) {
+            DataNode parentNode = node.getParentNode();
+            if (parentNode != null) {
+                return (N) parentNode.getSource();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public static class ViewHolder<I> extends cn.okayj.axui.viewholder.ViewHolder<I> {
+        private RecyclerViewAdapter.RecyclerViewHolder recyclerViewHolder;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        void setRecyclerViewHolder(RecyclerViewAdapter.RecyclerViewHolder innerViewHolder){
+            this.recyclerViewHolder = innerViewHolder;
+        }
+
+        public RecyclerViewAdapter.RecyclerViewHolder asRecyclerViewHolder(){
+            if(recyclerViewHolder == null)
+                throw new IllegalStateException("this view holder is not bind to view holder of RecyclerView");
+
+            return recyclerViewHolder;
+        }
     }
 
 }

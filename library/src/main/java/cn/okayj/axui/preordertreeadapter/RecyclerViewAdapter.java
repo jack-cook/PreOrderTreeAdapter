@@ -3,14 +3,11 @@ package cn.okayj.axui.preordertreeadapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import cn.okayj.axui.recyclerview.RecyclerViewHolder;
-import cn.okayj.axui.viewholder.ViewHolder;
-
 /**
  * Created by jack on 2017/2/4.
  */
 
-public class RecyclerViewAdapter<VH extends ViewHolder> extends RecyclerView.Adapter implements AdapterBridge<VH> {
+public class RecyclerViewAdapter<VH extends PreOrderTreeAdapter.ViewHolder> extends RecyclerView.Adapter implements AdapterBridge<VH> {
     private LinearDataSource<VH> source;
 
     public RecyclerViewAdapter(LinearDataSource<VH> source) {
@@ -42,5 +39,12 @@ public class RecyclerViewAdapter<VH extends ViewHolder> extends RecyclerView.Ada
     @Override
     public int getItemViewType(int position) {
         return source.viewType(position);
+    }
+
+    public static class RecyclerViewHolder extends cn.okayj.axui.recyclerview.RecyclerViewHolder {
+        public RecyclerViewHolder(PreOrderTreeAdapter.ViewHolder viewHolder) {
+            super(viewHolder);
+            viewHolder.setRecyclerViewHolder(this);
+        }
     }
 }
