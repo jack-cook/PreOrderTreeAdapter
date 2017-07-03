@@ -104,17 +104,31 @@ public abstract class PreOrderTreeAdapter<N, VH extends PreOrderTreeAdapter.View
             return false;
 
         DataNode newNode;
-        if (node == rootNode) {
-            newNode = buildSubTree(child);
-            rootNode.addChildNode(positionInParent, newNode);
-        } else {
-            newNode = buildSubTree(child);
-            node.addChildNode(positionInParent, newNode);
-        }
+        newNode = buildSubTree(child);
+        node.addChildNode(positionInParent, newNode);
 
-        int startPosition = flatIndexOf(child);
+        int startPosition = nodeFlatIndex.indexOf(newNode);
         int count = newNode.getFlatSize();
         realAdapter.notifyItemRangeInserted(startPosition, count);
+        return true;
+    }
+
+    /**
+     * notify child added to last position of parent
+     *
+     * @param parent
+     * @param child
+     * @return
+     */
+    public boolean notifyChildAdded(N parent, N child) {
+        DataNode node = findNode(parent);
+        if (node == null)
+            return false;
+
+        DataNode newNode = buildSubTree(child);
+        node.addChildNode(newNode);
+        int flatStartPosition = nodeFlatIndex.indexOf(newNode);
+        realAdapter.notifyItemRangeInserted(flatStartPosition, newNode.getFlatSize());
         return true;
     }
 
@@ -229,6 +243,7 @@ public abstract class PreOrderTreeAdapter<N, VH extends PreOrderTreeAdapter.View
     @Override
     public void bindViewHolder(VH viewHolder, int position) {
         DataNode<N> dataNode = (DataNode<N>) nodeFlatIndex.get(position);
+        viewHolder.setNode(dataNode);
         onBindViewHolder(viewHolder, dataNode.getSource());
     }
 
@@ -321,16 +336,22 @@ public abstract class PreOrderTreeAdapter<N, VH extends PreOrderTreeAdapter.View
     public static class ViewHolder<I> extends cn.okayj.axui.viewholder.ViewHolder<I> {
         private RecyclerViewAdapter.RecyclerViewHolder recyclerViewHolder;
 
+        private DataNode<I> node;
+
         public ViewHolder(View itemView) {
             super(itemView);
         }
 
-        void setRecyclerViewHolder(RecyclerViewAdapter.RecyclerViewHolder innerViewHolder){
+        void setRecyclerViewHolder(RecyclerViewAdapter.RecyclerViewHolder innerViewHolder) {
             this.recyclerViewHolder = innerViewHolder;
         }
 
-        public RecyclerViewAdapter.RecyclerViewHolder asRecyclerViewHolder(){
-            if(recyclerViewHolder == null)
+        void setNode(DataNode<I> node) {
+            this.node = node;
+        }
+
+        public RecyclerViewAdapter.RecyclerViewHolder asRecyclerViewHolder() {
+            if (recyclerViewHolder == null)
                 throw new IllegalStateException("this view holder is not bind to view holder of RecyclerView");
 
             return recyclerViewHolder;
